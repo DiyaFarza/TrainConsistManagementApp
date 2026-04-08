@@ -1,23 +1,38 @@
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+// Bogie class
+class Bogie {
+    String name;
+    int capacity;
+
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+}
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Create LinkedHashSet for train formation
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        // Create list of bogies
+        List<Bogie> bogies = new ArrayList<>();
 
         // Add bogies
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 40));
 
-        // Attempt to add duplicate
-        trainFormation.add("Sleeper"); // duplicate (will be ignored)
+        // Sort bogies by capacity (ascending)
+        bogies.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // Display final formation
-        System.out.println("Final Train Formation:");
-        System.out.println(trainFormation);
+        // Display sorted bogies
+        System.out.println("Bogies Sorted by Capacity:");
+
+        for (Bogie b : bogies) {
+            System.out.println("Bogie: " + b.name + " | Capacity: " + b.capacity);
+        }
     }
 }
