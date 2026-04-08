@@ -1,96 +1,37 @@
 import java.util.ArrayList;
-import java.util.List;
 
-// Base class for all bogies
-abstract class Bogie {
-    String id;
-
-    public Bogie(String id) {
-        this.id = id;
-    }
-
-    abstract void displayDetails();
-}
-
-// Passenger Bogie
-class PassengerBogie extends Bogie {
-    String type;
-    int capacity;
-
-    public PassengerBogie(String id, String type, int capacity) {
-        super(id);
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    @Override
-    void displayDetails() {
-        System.out.println("Passenger Bogie -> ID: " + id +
-                ", Type: " + type +
-                ", Capacity: " + capacity);
-    }
-}
-
-// Goods Bogie
-class GoodsBogie extends Bogie {
-    String shape;
-    String cargoType;
-
-    public GoodsBogie(String id, String shape, String cargoType) {
-        super(id);
-        this.shape = shape;
-        this.cargoType = cargoType;
-    }
-
-    @Override
-    void displayDetails() {
-        System.out.println("Goods Bogie -> ID: " + id +
-                ", Shape: " + shape +
-                ", Cargo: " + cargoType);
-    }
-}
-
-// Train class
-class Train {
-    String trainName;
-    List<Bogie> bogies;
-
-    public Train(String trainName) {
-        this.trainName = trainName;
-        bogies = new ArrayList<>();
-    }
-
-    public void addBogie(Bogie bogie) {
-        bogies.add(bogie);
-    }
-
-    public void displayConsist() {
-        System.out.println("Train Name: " + trainName);
-        System.out.println("Total Bogies: " + bogies.size());
-        System.out.println("---- Consist Details ----");
-
-        for (Bogie b : bogies) {
-            b.displayDetails();
-        }
-    }
-}
-
-// Main Application
 public class TrainConsistManagementApp {
+
     public static void main(String[] args) {
 
-        // Initialize Train
-        Train train = new Train("Express 101");
+        // Create ArrayList for passenger bogies
+        ArrayList<String> passengerBogies = new ArrayList<>();
 
-        // Add Passenger Bogies
-        train.addBogie(new PassengerBogie("P1", "Sleeper", 72));
-        train.addBogie(new PassengerBogie("P2", "AC Chair", 50));
+        // Adding bogies
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("AC Chair");
+        passengerBogies.add("First Class");
 
-        // Add Goods Bogies
-        train.addBogie(new GoodsBogie("G1", "Rectangular", "Coal"));
-        train.addBogie(new GoodsBogie("G2", "Cylindrical", "Oil"));
+        // Display after insertion
+        System.out.println("Passenger Bogies after addition:");
+        System.out.println(passengerBogies);
 
-        // Display Summary
-        train.displayConsist();
+        // Remove a bogie (AC Chair)
+        passengerBogies.remove("AC Chair");
+
+        // Display after removal
+        System.out.println("\nPassenger Bogies after removal:");
+        System.out.println(passengerBogies);
+
+        // Check existence of Sleeper
+        if (passengerBogies.contains("Sleeper")) {
+            System.out.println("\nSleeper bogie exists in the train.");
+        } else {
+            System.out.println("\nSleeper bogie does not exist in the train.");
+        }
+
+        // Final list state
+        System.out.println("\nFinal Passenger Bogies List:");
+        System.out.println(passengerBogies);
     }
 }
