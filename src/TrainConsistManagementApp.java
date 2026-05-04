@@ -1,43 +1,63 @@
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
-// Bogie class (same as UC7 & UC8)
-class Bogie {
-    String name;
-    int capacity;
+// Model class for Goods Bogie
+class GoodsBogie {
+    private String type;   // Cylindrical, Open, Box
+    private String cargo;  // Petroleum, Coal, Grain
 
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    public GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    @Override
+    public String toString() {
+        return "Bogie Type: " + type + ", Cargo: " + cargo;
     }
 }
 
+// Main Application
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Create bogie list
-        List<Bogie> bogies = new ArrayList<>();
+        // Step 1: Create list of goods bogies
+        List<GoodsBogie> bogies = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Open", "Coal"),
+                new GoodsBogie("Box", "Grain"),
+                new GoodsBogie("Cylindrical", "Petroleum")
+        );
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("Sleeper", 70));   // duplicate type
-        bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("AC Chair", 60));  // duplicate type
+        // Step 2: Display bogies
+        System.out.println("=== Goods Bogies List ===");
+        bogies.forEach(System.out::println);
 
-        // Group bogies by type (name)
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
+        // Step 3: Safety Validation using Streams
+        boolean isSafe = bogies.stream()
+                .allMatch(bogie ->
+                        !bogie.getType().equalsIgnoreCase("Cylindrical")
+                                || bogie.getCargo().equalsIgnoreCase("Petroleum")
+                );
 
-        // Display grouped bogies
-        System.out.println("Grouped Bogies by Type:");
-
-        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
-            System.out.println("\nType: " + entry.getKey());
-
-            for (Bogie b : entry.getValue()) {
-                System.out.println("  Capacity: " + b.capacity);
-            }
+        // Step 4: Display Result
+        System.out.println("\n=== Safety Check Result ===");
+        if (isSafe) {
+            System.out.println("Train is SAFETY COMPLIANT ✅");
+        } else {
+            System.out.println("Train is NOT SAFE ❌");
         }
+
+        // Step 5: Continue program
+        System.out.println("\nProgram execution completed.");
     }
 }
